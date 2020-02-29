@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myproject.mapper.IndustryMapper">
+	
+	<!-- 업종 목록 보기 -->
+	<resultMap type="com.myproject.dto.TypeOfIndustriesDTO" id="ilist">
+		<result column="industry_code" property="industryCode" />
+		<result column="industry_name" property="industryName" />
+	</resultMap>
+	
+	<select id="selectIndustryList" resultMap="ilist">
+		select industry_code, industry_name
+		from type_of_industries
+	</select>
+	
+</mapper>
