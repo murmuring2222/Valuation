@@ -4,15 +4,33 @@
 
 <mapper namespace="com.myproject.mapper.EnterpriseMapper">
 
+	<!-- 업종 코드 가져오기 -->
+	<resultMap type="hashmap" id="iclist">
+		<result column="industry_code" property="industryCode"/>
+	</resultMap>
+	
+	<select id="selectIndustryCodeList" resultMap="iclist">
+		select industry_code
+		from type_of_industries
+	</select>
+
+	<!-- 기업 등록 -->
+	<insert id="insertEnterprise" parameterType="hashmap">
+		insert into enterprises(enterprise_code, enterprise_name, industry_code) 
+		values (#{enterprise_code}, #{enterprise_name}, 
+		(select industry_code from type_of_industries where industry_name = #{industry_name}))
+	</insert>
+
 	<!-- 기업 목록 보기 -->
-	<resultMap type="com.myproject.dto.EnterpriseDTO" id="elist">
+	<resultMap type="hashmap" id="elist">
 		<result column="enterprise_code" property="enterpriseCode" />
 		<result column="enterprise_name" property="enterpriseName" />
 		<result column="stock_price" property="stockPrice" />
+		<result column="industry_code" property="industryCode" />
 	</resultMap>
 	
 	<select id="selectEnterpriseList" resultMap="elist">
-		select enterprise_code, enterprise_name, stock_price
+		select enterprise_code, enterprise_name, industry_code, stock_price
 		from enterprises
 	</select>
 
